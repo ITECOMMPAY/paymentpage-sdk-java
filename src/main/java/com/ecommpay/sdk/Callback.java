@@ -119,7 +119,7 @@ public class Callback
             if (entryValue instanceof Map) {
                 Object subValue = getValueByName(name, (HashMap) entryValue);
 
-                if (subValue != null) {
+                if (subValue != "") {
                     return subValue;
                 }
             }
