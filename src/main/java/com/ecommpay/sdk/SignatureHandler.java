@@ -31,7 +31,7 @@ public class SignatureHandler
     private boolean sortParams = true;
 
     /**
-     * Site sale
+     * Site salt
      */
     private String secret = "";
 

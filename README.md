@@ -15,7 +15,7 @@ with the EcommPay Payment Page.
 
 ```java
 Gate gate = new Gate('secret');
-Payment payment = new Payment(402);
+Payment payment = new Payment(11, "some payment id");
 
 payment
     .setParam(Payment.PAYMENT_AMOUNT, 1001)
