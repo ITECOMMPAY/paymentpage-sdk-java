@@ -1,6 +1,6 @@
-<a href="#" id="status-image-popup" title="Latest push build on default branch: passed" name="status-images" class="open-popup" data-ember-action="" data-ember-action-56="56"><img src="https://travis-ci.org/ITECOMMPAY/paymentpage-sdk-java.svg?branch=master" alt="build:passed"></a>
-<a href="https://codeclimate.com/github/ITECOMMPAY/paymentpage-sdk-java/maintainability"><img src="https://api.codeclimate.com/v1/badges/5e6463829b663913fe91/maintainability" /></a>
-<a href="https://codeclimate.com/github/ITECOMMPAY/paymentpage-sdk-java/test_coverage"><img src="https://api.codeclimate.com/v1/badges/5e6463829b663913fe91/test_coverage" /></a>
+[![Build Status](https://travis-ci.org/ITECOMMPAY/paymentpage-sdk-java.svg?branch=master)](https://travis-ci.org/ITECOMMPAY/paymentpage-sdk-java)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5e6463829b663913fe91/test_coverage)](https://codeclimate.com/github/ITECOMMPAY/paymentpage-sdk-java/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5e6463829b663913fe91/maintainability)](https://codeclimate.com/github/ITECOMMPAY/paymentpage-sdk-java/maintainability)
 
 # EcommPay payment page SDK
 

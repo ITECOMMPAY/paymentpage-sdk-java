@@ -15,9 +15,8 @@ public class TestFixtures {
             "6RX7o6FAfOZzA==";
     public static String testUrl = "https://test.test.test.test/payment";
     public static String baseUrl = "https://paymentpage.ecommpay.com/payment";
-    public static String compareParams = "?project_id=123&account_token=qwerty&cashier_predefined_amounts=22,33,44&bes" +
-            "t_before=2200-12-12T12:12:12+03:00&signature=bchBZJkqp8NMSV%2FJt7AUqw0kwRFxJiKmAFx535FRUeOIrYlDXbfkMsfxOa" +
-            "w72CEDDGwphGOk0mwEWVfltkTS6g%3D%3D";
+    public static String compareParams = "?project_id=123&payment_id=test_payment&account_token=qwerty&best_before=2200-12-12T12:12:12+03:00" +
+            "&signature=dWsHrWeCiBTUJ%2Ba3PTtuiMuxrtbKiN3QN2dUp0KrORyHL%2BJaV2Du2ZakteIV1mBgqdyKOKB5WZBR9CeODTESpw%3D%3D";
     public static String callbackDataInvalid = "{...";
     public static String callbackDataInvalidSignature = "{" +
         "\"body\": {" +
@@ -59,14 +58,13 @@ public class TestFixtures {
     }
 
     public static Payment getPayment() {
-        Payment payment = new Payment("123");
+        Payment payment = new Payment("123", "test_payment");
         ZonedDateTime bestBefore = ZonedDateTime.parse("2200-12-12T12:12:12+03:00[Europe/Moscow]");
         DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(bestBefore);
 
         return
             payment
                 .setParam(Payment.ACCOUNT_TOKEN, "qwerty")
-                .setParam(Payment.BEST_BEFORE, bestBefore)
-                .setParam(Payment.CASHIER_PREDEFINED_AMOUNTS, Arrays.asList("22", "33", "44"));
+                .setParam(Payment.BEST_BEFORE, bestBefore);
     }
 }

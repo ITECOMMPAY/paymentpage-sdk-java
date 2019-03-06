@@ -15,13 +15,7 @@ public class Payment
     public static final String PROJECT_ID = "project_id";
     public static final String ACCOUNT_TOKEN = "account_token";
     public static final String CARD_OPERATION_TYPE = "card_operation_type";
-    public static final String CASHIER_DEFAULT_MODE = "cashier_default_mode";
-    public static final String CASHIER_FORCE_MODE = "cashier_force_mode";
     public static final String BEST_BEFORE = "best_before";
-    public static final String CASHIER_PREDEFINED_AMOUNTS = "cashier_predefined_amounts";
-    public static final String CASHIER_MANUAL_INPUT = "cashier_manual_input";
-    public static final String CASHIER_MAX_VALUE = "cashier_max_value";
-    public static final String CASHIER_MIN_VALUE = "cashier_min_value";
     public static final String CLOSE_ON_MISSCLICK = "close_on_missclick";
     public static final String CSS_MODAL_WRAP = "css_modal_wrap";
     public static final String CUSTOMER_ID = "customer_id";
@@ -77,9 +71,12 @@ public class Payment
     /**
      * com.ecommpay.sdk.Payment constructor
      * @param projectId site id in our system
+     * @param paymentId payment id in your system
      */
-    public Payment(String projectId) {
-        this.setParam(PROJECT_ID, projectId);
+    public Payment(String projectId, String paymentId) {
+        this
+            .setParam(PROJECT_ID, projectId)
+            .setParam(PAYMENT_ID, paymentId);
     }
 
     /**
@@ -94,10 +91,6 @@ public class Payment
         if (key.equals(BEST_BEFORE) && object instanceof ZonedDateTime) {
             ZonedDateTime objectDateTime = ZonedDateTime.class.cast(object);
             value = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(objectDateTime);
-        }
-
-        if (key.equals(CASHIER_PREDEFINED_AMOUNTS) && object instanceof List) {
-            value = String.join(",", (List) value);
         }
 
         params.put(key, value);

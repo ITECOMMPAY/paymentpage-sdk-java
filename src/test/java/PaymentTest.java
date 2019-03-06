@@ -21,7 +21,7 @@ public class PaymentTest
     @Before
     public void initTest()
     {
-        payment = new Payment("123");
+        payment = new Payment("123", "test_payment");
     }
 
     @After
@@ -44,13 +44,12 @@ public class PaymentTest
 
         payment
             .setParam(Payment.ACCOUNT_TOKEN, "qwerty")
-            .setParam(Payment.BEST_BEFORE, bestBefore)
-            .setParam(Payment.CASHIER_PREDEFINED_AMOUNTS, Arrays.asList("22", "33", "44"));
+            .setParam(Payment.BEST_BEFORE, bestBefore);
 
         Map<String, String> condition = new HashMap<String, String>(){{
             put("project_id", "123");
+            put("payment_id", "test_payment");
             put("account_token", "qwerty");
-            put("cashier_predefined_amounts", "22,33,44");
             put("best_before", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(bestBefore));
         }};
 
