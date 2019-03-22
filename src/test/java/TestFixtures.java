@@ -11,14 +11,14 @@ public class TestFixtures {
     public static String secret = "qwerty";
     public static String paymentStatus = "success";
     public static String paymentId = "test.test-payment";
-    public static String paymentSignature = "njv3u8EgX6UJjgMO5wqzKSINmtk+VgdUEBuLsKN0VUizf86uwW+5gbMw1vtetjZu9MwlUemam" +
-            "6RX7o6FAfOZzA==";
+    public static String paymentSignature = "OonQm2ElTzZU80dNnsrS/ulnGU/eEMg7U1jfLRiKn0zx3GmnEOP2ne/pUOJ9LkzntYT7llgRh" +
+            "TpbxcT3ldHyEA==";
     public static String testUrl = "https://test.test.test.test/payment";
     public static String baseUrl = "https://paymentpage.ecommpay.com/payment";
     public static String compareParams = "?project_id=123&payment_id=test_payment&account_token=qwerty&best_before=2200-12-12T12:12:12+03:00" +
             "&signature=dWsHrWeCiBTUJ%2Ba3PTtuiMuxrtbKiN3QN2dUp0KrORyHL%2BJaV2Du2ZakteIV1mBgqdyKOKB5WZBR9CeODTESpw%3D%3D";
     public static String callbackDataInvalid = "{...";
-    public static String callbackDataInvalidSignature = "{" +
+    public static String callbackDataInvalidSignatureRecursive = "{" +
         "\"body\": {" +
             "\"payment\": {" +
                 "\"id\": \"" + paymentId + "1\"," +
@@ -27,22 +27,25 @@ public class TestFixtures {
             "\"signature\": \"" + paymentSignature + "\"" +
         "}" +
     "}";
+    public static String callbackDataInvalidSignature = "{" +
+        "\"payment\": {" +
+            "\"id\": \"" + paymentId + "1\"," +
+            "\"status\": \"" + paymentStatus + "\"" +
+        "}," +
+        "\"signature\": \"" + paymentSignature + "\"" +
+    "}";
     public static String callbackData = "{" +
-        "\"body\": {" +
-            "\"payment\": {" +
-                "\"id\": \"" + paymentId + "\"," +
-                "\"status\": \"" + paymentStatus + "\"" +
-            "}," +
-            "\"signature\": \"" + paymentSignature + "\"" +
-        "}" +
+        "\"payment\": {" +
+            "\"id\": \"" + paymentId + "\"," +
+            "\"status\": \"" + paymentStatus + "\"" +
+        "}," +
+        "\"signature\": \"" + paymentSignature + "\"" +
     "}";
     public static String callbackDataWithoutPaymentId = "{" +
-        "\"body\": {" +
-            "\"payment\": {" +
-                "\"status\": \"" + paymentStatus + "\"" +
-            "}," +
-            "\"signature\": \"AB4BUxuJEkzJ0l/Dliz+FX8CpvXYzpePuQ1UPU+3hE8y7prWZ0Lj56XArIHK4/9GrzHD6ystryMQ0pPcTQvpzA==\"" +
-        "}" +
+        "\"payment\": {" +
+            "\"status\": \"" + paymentStatus + "\"" +
+        "}," +
+        "\"signature\": \"jRtwdhnY6bQGt39FRUVrXEBTgplUTjRpCA/37x95/c5FvdsnZMnlLUGXVRpNjKOHbawT0s9AmUy3rajlexddwQ==\"" +
     "}";
 
     public static Map getPaymentMap() {

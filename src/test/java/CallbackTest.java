@@ -64,4 +64,10 @@ public class CallbackTest
         Callback callback = new Callback(TestFixtures.callbackDataWithoutPaymentId, TestFixtures.getSignatureHandler());
         assertEquals("", callback.getPaymentId());
     }
+
+    @Test(expected = ProcessException.class)
+    public void getSignatureRecursive() throws ProcessException
+    {
+        new Callback(TestFixtures.callbackDataInvalidSignatureRecursive, TestFixtures.getSignatureHandler());
+    }
 }
