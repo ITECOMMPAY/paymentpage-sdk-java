@@ -14,8 +14,8 @@ with the EcommPay Payment Page.
 ### Get URL for payment
 
 ```java
-Gate gate = new Gate('secret');
-Payment payment = new Payment(11, "some payment id");
+Gate gate = new Gate("secret");
+Payment payment = new Payment("11", "some payment id");
 
 payment
     .setParam(Payment.PAYMENT_AMOUNT, 1001)
@@ -31,7 +31,7 @@ String paymentUrl = gate.getPurchasePaymentPageUrl(payment);
 You'll need to autoload this code in order to handle notifications:
 
 ```java
-Gate gate = new Gate('secret');
+Gate gate = new Gate("secret");
 Callback callback = gate.handleCallback(callbackData);
 ```
 
