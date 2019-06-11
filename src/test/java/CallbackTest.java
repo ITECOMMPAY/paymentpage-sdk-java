@@ -70,4 +70,10 @@ public class CallbackTest
     {
         new Callback(TestFixtures.callbackDataInvalidSignatureRecursive, TestFixtures.getSignatureHandler());
     }
+
+    @Test
+    public void callbackWithArray() throws ProcessException
+    {
+        new Callback(TestFixtures.callbackDataWithArray, TestFixtures.getSignatureHandler());
+    }
 }
