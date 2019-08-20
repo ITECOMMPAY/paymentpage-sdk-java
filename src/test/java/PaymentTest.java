@@ -49,6 +49,7 @@ public class PaymentTest
         Map<String, String> condition = new HashMap<String, String>(){{
             put("project_id", "123");
             put("payment_id", "test_payment");
+            put("interface_type", "{\"id\": 21}");
             put("account_token", "qwerty");
             put("best_before", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(bestBefore));
         }};
