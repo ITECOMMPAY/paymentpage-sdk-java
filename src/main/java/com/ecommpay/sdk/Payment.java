@@ -63,6 +63,8 @@ public class Payment
     public static final String TYPE_PAYOUT = "payout";
     public static final String TYPE_RECURRING = "recurring";
 
+    private static final String INTERFACE_TYPE = "{\"id\": 21}";
+
     /**
      * Map with payment params
      */
@@ -76,7 +78,8 @@ public class Payment
     public Payment(String projectId, String paymentId) {
         this
             .setParam(PROJECT_ID, projectId)
-            .setParam(PAYMENT_ID, paymentId);
+            .setParam(PAYMENT_ID, paymentId)
+            .setParam("interface_type", INTERFACE_TYPE);
     }
 
     /**

@@ -15,8 +15,9 @@ public class TestFixtures {
             "TpbxcT3ldHyEA==";
     public static String testUrl = "https://test.test.test.test/payment";
     public static String baseUrl = "https://paymentpage.ecommpay.com/payment";
-    public static String compareParams = "?project_id=123&payment_id=test_payment&account_token=qwerty&best_before=2200-12-12T12:12:12+03:00" +
-            "&signature=dWsHrWeCiBTUJ%2Ba3PTtuiMuxrtbKiN3QN2dUp0KrORyHL%2BJaV2Du2ZakteIV1mBgqdyKOKB5WZBR9CeODTESpw%3D%3D";
+    public static String compareParams = "?project_id=123&payment_id=test_paymen" +
+            "t&account_token=qwerty&interface_type={\"id\": 21}&best_before=2200-12-12T12:12:12+03:00&signature=Isx3ivYhho57twVTh943HLLger8nUAxu85" +
+            "99dbieXVnbQHgl5FJ%2BUrMohHXUW3uZ16qBam%2F4nvxeFZUvaSF6gg%3D%3D";
     public static String callbackDataInvalid = "{...";
     public static String callbackDataInvalidSignatureRecursive = "{" +
         "\"body\": {" +
