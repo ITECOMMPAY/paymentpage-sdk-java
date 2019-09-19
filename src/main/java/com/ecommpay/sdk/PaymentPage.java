@@ -51,7 +51,7 @@ public class PaymentPage
     public String getUrl(Payment payment) {
         String signature = "&signature=".concat(encode(signatureHandler.sign(payment.getParams())));
         String query = payment.getParams().entrySet().stream()
-            .map(e -> e.getKey() + "=" + e.getValue())
+            .map(e -> e.getKey() + "=" + encode(e.getValue()))
             .collect(Collectors.joining("&"));
 
         return
