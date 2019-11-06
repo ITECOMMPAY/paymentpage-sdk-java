@@ -108,6 +108,16 @@ public class SignatureHandler
                 valueObject = Boolean.valueOf(valueObject.toString()) ? '1' : '0';
             }
 
+            if (valueObject instanceof List) {
+                HashMap<String, Object> tempMap = new HashMap<String, Object>();
+
+                for (int i = 0; i < ((List) valueObject).size(); i++){
+                    tempMap.put(String.valueOf(i), ((List) valueObject).get(i));
+                }
+
+                valueObject = tempMap;
+            }
+
             if (valueObject instanceof Map) {
                 paramsToSign.putAll(getParamsToSing((Map) valueObject, key));
             } else {

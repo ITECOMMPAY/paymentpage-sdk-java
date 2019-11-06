@@ -48,6 +48,34 @@ public class TestFixtures {
         "}," +
         "\"signature\": \"jRtwdhnY6bQGt39FRUVrXEBTgplUTjRpCA/37x95/c5FvdsnZMnlLUGXVRpNjKOHbawT0s9AmUy3rajlexddwQ==\"" +
     "}";
+    public static String callbackDataWithArray = "{" +
+        "\"errors\": [" +
+            "{" +
+                "\"message\": \"error1\"," +
+                "\"code\": 1," +
+                "\"fail\": true" +
+            "}," +
+            "{" +
+                "\"message\": \"error2\"," +
+                "\"code\": 2," +
+                "\"fail\": false" +
+            "}," +
+            "{" +
+                "\"message\": \"error3\"," +
+                "\"code\": 3," +
+                "\"fail\": {" +
+                    "\"sub-fail\": {" +
+                        "\"test\": 1" +
+                    "}" +
+                "}" +
+            "}" +
+        "]," +
+        "\"sum_converted\": {" +
+            "\"amount\": 10000," +
+            "\"currency\": \"EUR\"" +
+        "}," +
+        "\"signature\": \"oXF9a0F80FBkT5plV1aVcQIVSWr3l07StkQ2izUKmy//H2S9gMX982Kgm4tXB4+Ze1S5E1jeKhwheIgYMZ4J+w==\"" +
+    "}";
 
     public static Map getPaymentMap() {
         HashMap<String, String> map = new HashMap<String, String>();
