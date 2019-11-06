@@ -69,14 +69,14 @@ public class Callback
      * @return payment status
      */
     public String getPaymentStatus() {
-        return getValueByName("status", data).toString();
+        return getValueByName("status", getPayment()).toString();
     }
 
     /**
      * @return our payment id
      */
     public String getPaymentId() {
-        return getValueByName("id", data).toString();
+        return getValueByName("id", getPayment()).toString();
     }
 
     /**
