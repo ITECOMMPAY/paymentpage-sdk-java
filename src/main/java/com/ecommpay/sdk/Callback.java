@@ -159,7 +159,7 @@ public class Callback
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            data = mapper.readValue(callbackData, new TypeReference<Map<String, Object>>(){});
+            data = (HashMap<String, Object>) mapper.readValue(callbackData, new TypeReference<Map<String, Object>>(){});
         } catch (IOException e) {
             throw new ProcessException(e);
         }
