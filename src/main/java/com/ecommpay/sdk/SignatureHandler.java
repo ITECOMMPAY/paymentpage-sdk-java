@@ -21,6 +21,11 @@ public class SignatureHandler
     private static final String DELIMITER_PARAM = ";";
 
     /**
+     * Ignore keys from signature
+     */
+    private static final String[] IGNORE_KEYS = new String[]{"frame_mode"};
+
+    /**
      * Crypto algorithm
      */
     private String ALGORITHM = "HmacSHA512";
@@ -70,7 +75,7 @@ public class SignatureHandler
      * @return signature
      */
     public String sign(Map<String, Object> params) {
-        Map paramsToSing = getParamsToSing(params, "");
+        Map paramsToSing = getParamsToSing(params, "", IGNORE_KEYS);
         List<String> paramsListToSing = new ArrayList<String>(paramsToSing.values());
 
         if (sortParams) {
@@ -95,12 +100,18 @@ public class SignatureHandler
      * Method for preparing params
      * @param params map with params
      * @param prefix add before key
+     * @param ignore ignore specific keys
      * @return prepared map with params
      */
-    private Map getParamsToSing(Map params, String prefix) {
+    private Map getParamsToSing(Map params, String prefix, String[] ignore) {
+        ignore = ignore != null ? ignore : new String[]{};
         Map paramsToSign = new HashMap<String, String>();
 
         for (Map.Entry<String, Object> entry : ((Map<String, Object>) params).entrySet()) {
+            if (Arrays.stream(ignore).anyMatch(entry.getKey()::equals)) {
+                continue;
+            }
+
             String key = prefix + (prefix.equals("") ? "" : DELIMITER_KEY) + entry.getKey();
             Object valueObject = entry.getValue();
 
@@ -109,7 +120,7 @@ public class SignatureHandler
             }
 
             if (valueObject instanceof Map) {
-                paramsToSign.putAll(getParamsToSing((Map) valueObject, key));
+                paramsToSign.putAll(getParamsToSing((Map) valueObject, key, ignore));
             } else {
                 paramsToSign.put(key, key + DELIMITER_KEY + valueObject.toString());
             }

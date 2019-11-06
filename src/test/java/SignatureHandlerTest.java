@@ -14,15 +14,9 @@ import static org.junit.Assert.*;
 public class SignatureHandlerTest
 {
     private SignatureHandler signatureHandler;
-    private String json =
-        "{" +
-            "\"payment\": {" +
-                "\"id\": \"test.test-payment\"," +
-                "\"status\": \"success\"," +
-                "\"valid\": true" +
-            "}," +
-            "\"some-data\": 1234" +
-        "}";
+    private String json = ("{`payment`:" +
+            "{`id`: `test.test-payment`, `status`: `success`, `valid`: true}, " +
+            "`some-data`: 1234, `frame_mode`: `popup`}").replace('`', '"');
 
     @Before
     public void initTest()
