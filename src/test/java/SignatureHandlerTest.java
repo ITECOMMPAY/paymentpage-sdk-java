@@ -21,7 +21,13 @@ public class SignatureHandlerTest
                 "\"status\": \"success\"," +
                 "\"valid\": true" +
             "}," +
-            "\"some-data\": 1234" +
+            "\"some-data\": 1234," +
+            "\"errors\": [" +
+                "{" +
+                    "\"code\": 22565," +
+                    "\"message\": \"Failure message\"" +
+                "}" +
+            "]" +
         "}";
 
     @Before
@@ -56,7 +62,7 @@ public class SignatureHandlerTest
     {
         ObjectMapper mapper = new ObjectMapper();
         Map paymentParams = mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
-        assertTrue(signatureHandler.check("Z0YwpWdNwBspA/6wicHVr4f6n0xMFuyZnAlIxnO86Zu/EIo3FZUEntClEVjulKpBrVF+HlyPEK1X41iCjbFgWg==", paymentParams));
+        assertTrue(signatureHandler.check("xtj79Dt9X6pVnHw0GWSgISRMRp9PopymK7yZjHAedHpNAuFiOqddEXZ/JNCsVP3Gm1Urv6IEqDJjXkPqj+J7rg==", paymentParams));
     }
 
     @Test
@@ -66,7 +72,7 @@ public class SignatureHandlerTest
             ObjectMapper mapper = new ObjectMapper();
             Map paymentParams = mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
             String sing = signatureHandler.sign(paymentParams);
-            assertEquals("Z0YwpWdNwBspA/6wicHVr4f6n0xMFuyZnAlIxnO86Zu/EIo3FZUEntClEVjulKpBrVF+HlyPEK1X41iCjbFgWg==", sing);
+            assertEquals("xtj79Dt9X6pVnHw0GWSgISRMRp9PopymK7yZjHAedHpNAuFiOqddEXZ/JNCsVP3Gm1Urv6IEqDJjXkPqj+J7rg==", sing);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

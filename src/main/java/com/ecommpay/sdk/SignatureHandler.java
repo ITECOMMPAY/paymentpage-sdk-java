@@ -108,7 +108,12 @@ public class SignatureHandler
                 valueObject = Boolean.valueOf(valueObject.toString()) ? '1' : '0';
             }
 
-            if (valueObject instanceof Map) {
+            if (valueObject instanceof ArrayList) {
+                for (int i = 0; i < ((ArrayList) valueObject).size(); i++) {
+                    Object subValueObject = ((ArrayList) valueObject).get(i);
+                    paramsToSign.putAll(getParamsToSing((Map) subValueObject, key + ":" + i));
+                }
+            } else if (valueObject instanceof Map) {
                 paramsToSign.putAll(getParamsToSing((Map) valueObject, key));
             } else {
                 paramsToSign.put(key, key + DELIMITER_KEY + valueObject.toString());
