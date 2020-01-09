@@ -7,7 +7,6 @@ import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ public class PaymentTest
     @Before
     public void initTest()
     {
-        payment = new Payment("123", "test_payment");
+        payment = (new Payment("123")).setParam(Payment.PAYMENT_ID, "test_payment");
     }
 
     @After
