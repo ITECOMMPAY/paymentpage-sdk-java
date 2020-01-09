@@ -15,9 +15,10 @@ with the EcommPay Payment Page.
 
 ```java
 Gate gate = new Gate("secret");
-Payment payment = new Payment("11", "some payment id");
+Payment payment = new Payment("11");
 
 payment
+    .setParam(Payment.PAYMENT_ID, "some payment id")
     .setParam(Payment.PAYMENT_AMOUNT, 1001)
     .setParam(Payment.PAYMENT_CURRENCY, "EUR");
 
