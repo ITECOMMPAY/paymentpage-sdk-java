@@ -73,13 +73,22 @@ public class Payment
     /**
      * com.ecommpay.sdk.Payment constructor
      * @param projectId site id in our system
+     */
+    public Payment(String projectId) {
+        this
+            .setParam(PROJECT_ID, projectId)
+            .setParam("interface_type", INTERFACE_TYPE);
+    }
+
+    /**
+     * com.ecommpay.sdk.Payment constructor
+     * @deprecated
+     * @param projectId site id in our system
      * @param paymentId payment id in your system
      */
     public Payment(String projectId, String paymentId) {
-        this
-            .setParam(PROJECT_ID, projectId)
-            .setParam(PAYMENT_ID, paymentId)
-            .setParam("interface_type", INTERFACE_TYPE);
+        this(projectId);
+        this.setParam(PAYMENT_ID, paymentId);
     }
 
     /**
