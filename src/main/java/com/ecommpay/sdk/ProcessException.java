@@ -12,10 +12,18 @@ public class ProcessException extends Exception
     }
 
     /**
-     * Can be with message
-     * @param var1 exception message
+     * Can be with exception
+     * @param exception exception
      */
-    public ProcessException(Throwable var1) {
-        super(var1);
+    public ProcessException(Throwable exception) {
+        super(exception);
+    }
+
+    /**
+     * Can be with message
+     * @param message exception message
+     */
+    public ProcessException(String message) {
+        super(message);
     }
 }

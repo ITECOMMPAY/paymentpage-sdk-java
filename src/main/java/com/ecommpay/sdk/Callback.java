@@ -54,7 +54,7 @@ public class Callback
         signatureHandler = signHandler;
 
         if (!checkSignature()) {
-            throw new ProcessException();
+            throw new ProcessException("Invalid signature");
         }
     }
 
@@ -62,38 +62,59 @@ public class Callback
      * @return Map with payment data
      */
     public Map getPayment() {
-        return (HashMap) getValueByName("payment", data);
+        Object payment = getValue("payment");
+
+        return payment != null ? (HashMap) payment : null;
     }
 
     /**
      * @return payment status
      */
     public String getPaymentStatus() {
-        return getValueByName("status", getPayment()).toString();
+        Object paymentStatus = getValue("payment.status");
+
+        return paymentStatus != null ? paymentStatus.toString() : null;
     }
 
     /**
-     * @return our payment id
+     * @return payment id
      */
     public String getPaymentId() {
-        return getValueByName("id", getPayment()).toString();
+        Object paymentId = getValue("payment.id");
+
+        return paymentId != null ? paymentId.toString() : null;
     }
 
     /**
      * @return callback signature
+     * @throws ProcessException throws when can't decode
      */
-    public String getSignature() {
-        if (signature == null) {
-            signature = getValueByName("signature", data).toString();
+    public String getSignature() throws ProcessException {
+        if (signature != null) {
+            return signature;
         }
 
-        return signature;
+        String[] signPaths = {
+            "signature",
+            "general.signature",
+        };
+
+        for (String signPath : signPaths) {
+            Object sign = getValue(signPath);
+
+            if (sign != null) {
+                return signature = sign.toString();
+            }
+        }
+
+        throw new ProcessException("Undefined signature");
     }
 
     /**
      * @return that signature valid or not valid
+     * @throws ProcessException
      */
-    public boolean checkSignature() {
+    public boolean checkSignature() throws ProcessException {
         String signature = getSignature();
         removeParam("signature", data);
 
@@ -102,30 +123,31 @@ public class Callback
 
     /**
      * Method for get value in multilevel map by key
-     * @param name key for searching
-     * @param data map with callback data
-     * @return value or empty string
+     * @param path key for searching
+     * @return mixed value or null
      */
-    private Object getValueByName(String name, Map<String, Object> data) {
-        Object value = data.get(name);
+    public Object getValue(String path) {
+        String[] keysPath = path.split("\\.");
+        HashMap<String, Object> cbData = this.data;
 
-        if (value != null) {
-            return value;
-        }
+        for (int i = 0; i < keysPath.length; i++) {
+            String key = keysPath[i];
+            Object value = cbData.get(key);
 
-        for(Map.Entry<String, Object> entry : data.entrySet()) {
-            Object entryValue = entry.getValue();
+            if (value == null) {
+                return null;
+            }
 
-            if (entryValue instanceof Map) {
-                Object subValue = getValueByName(name, (HashMap) entryValue);
+            if (value instanceof Map) {
+                cbData = (HashMap<String, Object>) value;
+            }
 
-                if (subValue != "") {
-                    return subValue;
-                }
+            if ((keysPath.length - 1) == i) {
+                return value;
             }
         }
 
-        return "";
+        return null;
     }
 
     /**
@@ -159,7 +181,10 @@ public class Callback
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            data = (HashMap<String, Object>) mapper.readValue(callbackData, new TypeReference<Map<String, Object>>(){});
+            data = (HashMap<String, Object>) mapper.readValue(
+                callbackData,
+                new TypeReference<Map<String, Object>>(){}
+            );
         } catch (IOException e) {
             throw new ProcessException(e);
         }
