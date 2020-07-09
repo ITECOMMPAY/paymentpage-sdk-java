@@ -46,6 +46,13 @@ public class CallbackTest
         assertEquals(TestFixtures.paymentSignature, callback.getSignature());
     }
 
+    @Test
+    public void generalSignature() throws ProcessException
+    {
+        Callback callback = new Callback(TestFixtures.callbackDataGeneralSignature, TestFixtures.getSignatureHandler());
+        assertEquals(TestFixtures.paymentSignature, callback.getSignature());
+    }
+
     @Test(expected = ProcessException.class)
     public void cantDecode() throws ProcessException
     {

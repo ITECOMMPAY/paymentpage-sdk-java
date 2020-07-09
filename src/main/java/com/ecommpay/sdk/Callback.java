@@ -135,7 +135,7 @@ public class Callback
             Object value = cbData.get(key);
 
             if (value == null) {
-                return null;
+                break;
             }
 
             if (value instanceof Map) {

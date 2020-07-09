@@ -6,12 +6,6 @@ package com.ecommpay.sdk;
 public class ProcessException extends Exception
 {
     /**
-     * Can be without message
-     */
-    public ProcessException() {
-    }
-
-    /**
      * Can be with exception
      * @param exception exception
      */

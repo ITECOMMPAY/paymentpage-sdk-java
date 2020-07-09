@@ -42,6 +42,15 @@ public class TestFixtures {
         "}," +
         "\"signature\": \"" + paymentSignature + "\"" +
     "}";
+    public static String callbackDataGeneralSignature = "{" +
+        "\"payment\": {" +
+            "\"id\": \"" + paymentId + "\"," +
+            "\"status\": \"" + paymentStatus + "\"" +
+        "}," +
+        "\"general\": {" +
+            "\"signature\": \"" + paymentSignature + "\"" +
+        "}" +
+    "}";
     public static String callbackDataWithoutPaymentId = "{" +
         "\"payment\": {" +
             "\"status\": \"" + paymentStatus + "\"" +
