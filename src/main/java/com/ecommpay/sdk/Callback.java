@@ -129,10 +129,10 @@ public class Callback
     public Object getValue(String path) {
         String[] keysPath = path.split("\\.");
         HashMap<String, Object> cbData = this.data;
+        Object value = null;
 
-        for (int i = 0; i < keysPath.length; i++) {
-            String key = keysPath[i];
-            Object value = cbData.get(key);
+        for (String key : keysPath) {
+            value = cbData.get(key);
 
             if (value == null) {
                 break;
@@ -141,13 +141,9 @@ public class Callback
             if (value instanceof Map) {
                 cbData = (HashMap<String, Object>) value;
             }
-
-            if ((keysPath.length - 1) == i) {
-                return value;
-            }
         }
 
-        return null;
+        return value;
     }
 
     /**
