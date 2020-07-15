@@ -41,8 +41,15 @@ public class CallbackTest
     }
 
     @Test
-    public void getSignature()
+    public void getSignature() throws ProcessException
     {
+        assertEquals(TestFixtures.paymentSignature, callback.getSignature());
+    }
+
+    @Test
+    public void generalSignature() throws ProcessException
+    {
+        Callback callback = new Callback(TestFixtures.callbackDataGeneralSignature, TestFixtures.getSignatureHandler());
         assertEquals(TestFixtures.paymentSignature, callback.getSignature());
     }
 
@@ -62,7 +69,7 @@ public class CallbackTest
     public void cantGetPaymentId() throws ProcessException
     {
         Callback callback = new Callback(TestFixtures.callbackDataWithoutPaymentId, TestFixtures.getSignatureHandler());
-        assertEquals("", callback.getPaymentId());
+        assertEquals(null, callback.getPaymentId());
     }
 
     @Test(expected = ProcessException.class)
@@ -75,5 +82,19 @@ public class CallbackTest
     public void callbackWithArray() throws ProcessException
     {
         new Callback(TestFixtures.callbackDataWithArray, TestFixtures.getSignatureHandler());
+    }
+
+    @Test
+    public void callbackWithoutPayment() throws ProcessException
+    {
+        Callback callback = new Callback(TestFixtures.callbackDataWithoutPayment, TestFixtures.getSignatureHandler());
+        assertEquals(null, callback.getPaymentId());
+        assertEquals(null, callback.getPayment());
+    }
+
+    @Test(expected = ProcessException.class)
+    public void callbackWithoutSign() throws ProcessException
+    {
+        new Callback(TestFixtures.callbackDataWithoutSign, TestFixtures.getSignatureHandler());
     }
 }
