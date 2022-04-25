@@ -15,9 +15,9 @@ public class TestFixtures {
             "TpbxcT3ldHyEA==";
     public static String testUrl = "https://test.test.test.test/payment";
     public static String baseUrl = "https://paymentpage.ecommpay.com/payment";
-    public static String compareParams = "?project_id=123&payment_id=test_paymen" +
-            "t&account_token=qwerty&interface_type=%7B%22id%22%3A+21%7D&best_before=2200-12-12T12%3A12%3A12%2B03%3A00&" +
-            "signature=Isx3ivYhho57twVTh943HLLger8nUAxu8599dbieXVnbQHgl5FJ%2BUrMohHXUW3uZ16qBam%2F4nvxeFZUvaSF6gg%3D%3D";
+    public static String compareParams = "?project_id=60481&" +
+            "signature=xdIXTiffRnObgBtT6YVSn10lvtdZQznyBDL2aafvTETigagUr5iof6CYCv097qoJDRROGGH4xNb%2BaF2GRTgA9Q%3D%3D" +
+            "&payment_id=test_payment&interface_type=%7B%22id%22%3A+21%7D&best_before=2200-12-12T12%3A12%3A12%2B03%3A00";
     public static String callbackDataInvalid = "{...";
     public static String callbackDataInvalidSignatureRecursive = "{" +
         "\"body\": {" +
@@ -126,13 +126,12 @@ public class TestFixtures {
     }
 
     public static Payment getPayment() {
-        Payment payment = new Payment("123", "test_payment");
+        Payment payment = new Payment("60481", "test_payment");
         ZonedDateTime bestBefore = ZonedDateTime.parse("2200-12-12T12:12:12+03:00[Europe/Moscow]");
         DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(bestBefore);
 
         return
             payment
-                .setParam(Payment.ACCOUNT_TOKEN, "qwerty")
                 .setParam(Payment.BEST_BEFORE, bestBefore);
     }
 }
