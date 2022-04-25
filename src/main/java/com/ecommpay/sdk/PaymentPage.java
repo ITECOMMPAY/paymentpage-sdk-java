@@ -10,11 +10,6 @@ import java.util.stream.Collectors;
 public class PaymentPage
 {
     /**
-     * Encoding charset
-     */
-    private String CHARSET = "UTF-8";
-
-    /**
      * payment domain with path
      */
     private String baseUrl = "https://paymentpage.ecommpay.com/payment";
@@ -49,29 +44,14 @@ public class PaymentPage
      * @return string URL that you can use for redirect on payment page
      */
     public String getUrl(Payment payment) {
-        String signature = "&signature=".concat(encode(signatureHandler.sign(payment.getParams())));
-        String query = payment.getParams().entrySet().stream()
-            .map(e -> e.getKey() + "=" + encode(e.getValue()))
-            .collect(Collectors.joining("&"));
+        payment.setParam("signature", signatureHandler.sign(payment.getParams()));
 
         return
             baseUrl
                 .concat("?")
-                .concat(query)
-                .concat(signature);
+                .concat(payment.toString());
 
     }
 
-    /**
-     * Method for URL encoding payment params
-     * @param param payment param value
-     * @return URL encoded param
-     */
-    private String encode(Object param) {
-        try{
-            return URLEncoder.encode(param.toString(), CHARSET);
-        } catch(UnsupportedEncodingException e){
-            throw new RuntimeException(e);
-        }
-    }
+
 }

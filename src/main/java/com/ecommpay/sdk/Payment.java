@@ -1,9 +1,11 @@
 package com.ecommpay.sdk;
 
+import java.io.UnsupportedEncodingException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
+import java.util.stream.Collectors;
+import java.net.URLEncoder;
 
 /**
  * Class for preparing payment params
@@ -66,6 +68,11 @@ public class Payment
     private static final String INTERFACE_TYPE = "{\"id\": 21}";
 
     /**
+     * Encoding charset
+     */
+    private String CHARSET = "UTF-8";
+
+    /**
      * Map with payment params
      */
     private HashMap<String, Object> params = new HashMap<String, Object>();
@@ -111,10 +118,29 @@ public class Payment
     }
 
     /**
+     * Method for URL encoding payment params
+     * @param param payment param value
+     * @return URL encoded param
+     */
+    private String encode(Object param) {
+        try{
+            return URLEncoder.encode(param.toString(), CHARSET);
+        } catch(UnsupportedEncodingException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Method return payment params
      * @return map with params
      */
     public HashMap<String, Object> getParams() {
         return params;
+    }
+
+    public String toString() {
+        return this.getParams().entrySet().stream()
+                .map(e -> e.getKey() + "=" + encode(e.getValue()))
+                .collect(Collectors.joining("&"));
     }
 }

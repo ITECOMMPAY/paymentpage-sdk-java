@@ -5,6 +5,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import static org.junit.Assert.assertEquals;
 
 public class GateTest
@@ -30,8 +33,7 @@ public class GateTest
     }
 
     @Test
-    public void getPurchasePaymentPageUrl()
-    {
+    public void getPurchasePaymentPageUrl() throws IOException, URISyntaxException {
         assertEquals(gate, gate.setBaseUrl(TestFixtures.baseUrl));
         assertEquals(TestFixtures.baseUrl.concat(TestFixtures.compareParams), gate.getPurchasePaymentPageUrl(TestFixtures.getPayment()));
     }
