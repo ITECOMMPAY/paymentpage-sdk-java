@@ -112,7 +112,7 @@ public class SignatureHandler
                 continue;
             }
 
-            String key = prefix + (prefix.equals("") ? "" : DELIMITER_KEY) + entry.getKey();
+            String key = prefix + (prefix.equals("") ? "" : DELIMITER_KEY) + entry.getKey().replaceAll(":", "::");
             Object valueObject = entry.getValue();
 
             if (valueObject instanceof Boolean) {
