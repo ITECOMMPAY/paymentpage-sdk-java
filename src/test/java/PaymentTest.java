@@ -59,7 +59,7 @@ public class PaymentTest
     }
 
     @Test
-    public void CardOperationTypeTest()
+    public void cardOperationTypeTest()
     {
         payment.setParam(Payment.CARD_OPERATION_TYPE, "auth");
 
