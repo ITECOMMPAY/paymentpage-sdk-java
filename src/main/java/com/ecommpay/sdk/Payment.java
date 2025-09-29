@@ -16,7 +16,10 @@ public class Payment
 {
     public static final String PROJECT_ID = "project_id";
     public static final String ACCOUNT_TOKEN = "account_token";
-    public static final String CARD_OPERATION_TYPE = "card_operation_type";
+    /** @deprecated Use {@link #OPERATION_TYPE} instead. */
+    @Deprecated
+    public static final String CARD_OPERATION_TYPE = "operation_type";
+    public static final String OPERATION_TYPE = "operation_type";
     public static final String BEST_BEFORE = "best_before";
     public static final String CLOSE_ON_MISSCLICK = "close_on_missclick";
     public static final String CSS_MODAL_WRAP = "css_modal_wrap";

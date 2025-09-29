@@ -43,14 +43,31 @@ public class PaymentTest
 
         payment
             .setParam(Payment.ACCOUNT_TOKEN, "qwerty")
-            .setParam(Payment.BEST_BEFORE, bestBefore);
+            .setParam(Payment.BEST_BEFORE, bestBefore)
+            .setParam(Payment.OPERATION_TYPE, "sale");
 
         Map<String, String> condition = new HashMap<String, String>(){{
             put("project_id", "123");
             put("payment_id", "test_payment");
             put("interface_type", "{\"id\": 21}");
             put("account_token", "qwerty");
+            put("operation_type", "sale");
             put("best_before", DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(bestBefore));
+        }};
+
+        assertEquals(condition, payment.getParams());
+    }
+
+    @Test
+    public void CardOperationTypeTest()
+    {
+        payment.setParam(Payment.CARD_OPERATION_TYPE, "auth");
+
+        Map<String, String> condition = new HashMap<String, String>(){{
+            put("project_id", "123");
+            put("payment_id", "test_payment");
+            put("interface_type", "{\"id\": 21}");
+            put("operation_type", "auth");
         }};
 
         assertEquals(condition, payment.getParams());
