@@ -1,17 +1,23 @@
 import com.ecommpay.sdk.Payment;
+import com.ecommpay.sdk.ProcessException;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PaymentTest
 {
@@ -71,5 +77,57 @@ public class PaymentTest
         }};
 
         assertEquals(condition, payment.getParams());
+    }
+
+    @Test
+    public void testSetAllFieldsBookingInfo() throws Exception {
+        Payment payment = new Payment("123");
+
+        InputStream is = getClass()
+                .getClassLoader()
+                .getResourceAsStream("booking_info.json");
+        assertNotNull(is);
+
+        JSONObject bookingInfo =
+                (JSONObject) new JSONParser().parse(
+                        new InputStreamReader(is, StandardCharsets.UTF_8)
+                );
+
+        payment.setBookingInfo(bookingInfo);
+
+        String encoded = payment.getParams().get("booking_info").toString();
+        assertNotNull(encoded);
+
+        String decodedJson = new String(
+                Base64.getDecoder().decode(encoded),
+                StandardCharsets.UTF_8
+        );
+
+        JSONObject decoded =
+                (JSONObject) new JSONParser().parse(decodedJson);
+
+        assertEquals(bookingInfo, decoded);
+    }
+
+    @Test(expected = ProcessException.class)
+    public void testSetBookingInfoNull() throws ProcessException {
+        Payment payment = new Payment("123");
+        payment.setBookingInfo(null);
+    }
+
+    @Test(expected = ProcessException.class)
+    public void testSetBookingInfoEmpty() throws ProcessException {
+        Payment payment = new Payment("123");
+        payment.setBookingInfo(new HashMap<>());
+    }
+
+    @Test(expected = ProcessException.class)
+    public void testSetBookingInfoInvalid() throws ProcessException {
+        Payment payment = new Payment("123");
+
+        HashMap<String, Object> invalid = new HashMap<>();
+        invalid.put("bad", new Object());
+
+        payment.setBookingInfo(invalid);
     }
 }

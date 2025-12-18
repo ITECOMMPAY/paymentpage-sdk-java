@@ -1,8 +1,11 @@
 package com.ecommpay.sdk;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.net.URLEncoder;
@@ -99,6 +102,26 @@ public class Payment
     public Payment(String projectId, String paymentId) {
         this(projectId);
         this.setParam(PAYMENT_ID, paymentId);
+    }
+
+    public void setBookingInfo(HashMap<String, Object> bookingInfo) throws ProcessException {
+        if (bookingInfo == null || bookingInfo.isEmpty()) {
+            throw new ProcessException("Booking info parameter must not be null or empty");
+        }
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            String json = mapper.writeValueAsString(bookingInfo);
+            mapper.readTree(json);
+            String base64 = Base64.getEncoder()
+                    .encodeToString(json.getBytes(StandardCharsets.UTF_8));
+
+            this.setParam("booking_info", base64);
+
+        } catch (Exception e) {
+            throw new ProcessException("Invalid booking info JSON structure");
+        }
     }
 
     /**
