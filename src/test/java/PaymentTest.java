@@ -81,22 +81,22 @@ public class PaymentTest
         Payment payment = new Payment("123");
 
         Booker booker = new Booker()
-                .setFirst_name("William")
-                .setLast_name("Herschel")
+                .setFirstName("William")
+                .setLastName("Herschel")
                 .setEmail("rsfellow@mail.com");
         List<Booker> bookers = new ArrayList<>();
         bookers.add(booker);
 
         Item item = new Item()
                 .setDescription("VIP Arrival")
-                .setStart_date(LocalDate.of(2026, 8, 12))
-                .setEnd_date(LocalDate.of(2026, 8, 14));
+                .setStartDate(LocalDate.of(2026, 8, 12))
+                .setEndDate(LocalDate.of(2026, 8, 14));
         List<Item> items = new ArrayList<>();
         items.add(item);
 
         BookingInfo bookingInfo = new BookingInfo()
-                .setStart_date(LocalDate.of(2026, 8, 12))
-                .setEnd_date(LocalDate.of(2026, 8, 14))
+                .setStartDate(LocalDate.of(2026, 8, 12))
+                .setEndDate(LocalDate.of(2026, 8, 14))
                 .setDescription("Sideris music festival full pass")
                 .setTotal(200000)
                 .setPax(1)
@@ -110,11 +110,11 @@ public class PaymentTest
         String encoded = payment.getParams().get("booking_info").toString();
         assertNotNull(encoded);
 
-        String expected = "eyJzdGFydF9kYXRlIjoiMTItMDgtMjAyNiIsImVuZF9kYXRlIjoiMTQtMDgtMjAyNiIsImRlc2NyaXB0aW9uIjoiU2" +
-                "lkZXJpcyBtdXNpYyBmZXN0aXZhbCBmdWxsIHBhc3MiLCJ0b3RhbCI6MjAwMDAwLCJwYXgiOjEsImJvb2tlcnMiOlt7ImZpcnN0X2" +
-                "5hbWUiOiJXaWxsaWFtIiwibGFzdF9uYW1lIjoiSGVyc2NoZWwiLCJlbWFpbCI6InJzZmVsbG93QG1haWwuY29tIn1dLCJpdGVtcy" +
-                "I6W3siZGVzY3JpcHRpb24iOiJWSVAgQXJyaXZhbCIsInN0YXJ0X2RhdGUiOiIxMi0wOC0yMDI2IiwiZW5kX2RhdGUiOiIxNC0wOC" +
-                "0yMDI2In1dLCJyZWZlcmVuY2UiOiJtdXNpY2Zlc3RsaW5rIiwiaWQiOiI4MyJ9";
+        String expected = "eyJkZXNjcmlwdGlvbiI6IlNpZGVyaXMgbXVzaWMgZmVzdGl2YWwgZnVsbCBwYXNzIiwidG90YWwiOjIwMDAwMCwicG" +
+                "F4IjoxLCJib29rZXJzIjpbeyJlbWFpbCI6InJzZmVsbG93QG1haWwuY29tIiwiZmlyc3RfbmFtZSI6IldpbGxpYW0iLCJsYXN0X2" +
+                "5hbWUiOiJIZXJzY2hlbCJ9XSwiaXRlbXMiOlt7ImRlc2NyaXB0aW9uIjoiVklQIEFycml2YWwiLCJzdGFydF9kYXRlIjoiMTItMD" +
+                "gtMjAyNiIsImVuZF9kYXRlIjoiMTQtMDgtMjAyNiJ9XSwicmVmZXJlbmNlIjoibXVzaWNmZXN0bGluayIsImlkIjoiODMiLCJzdG" +
+                "FydF9kYXRlIjoiMTItMDgtMjAyNiIsImVuZF9kYXRlIjoiMTQtMDgtMjAyNiJ9";
         assertEquals(expected, encoded);
     }
 

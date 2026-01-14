@@ -1,29 +1,35 @@
 package com.ecommpay.sdk.model.booking;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@SuppressWarnings("unused")
 public class Booker {
-    private String first_name;
-    private String last_name;
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
     private String email;
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Booker setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public Booker setFirstName(String first_name) {
+        this.firstName = first_name;
 
         return this;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public Booker setLast_name(String last_name) {
-        this.last_name = last_name;
+    public Booker setLastName(String last_name) {
+        this.lastName = last_name;
 
         return this;
     }

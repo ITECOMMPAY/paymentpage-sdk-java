@@ -2,16 +2,22 @@ package com.ecommpay.sdk.model.booking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@SuppressWarnings("unused")
 public class Item {
     private String description;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate start_date;
+    @JsonProperty("start_date")
+    private LocalDate startDate;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate end_date;
+    @JsonProperty("end_date")
+    private LocalDate endDate;
 
     public String getDescription() {
         return description;
@@ -23,22 +29,22 @@ public class Item {
         return this;
     }
 
-    public LocalDate getStart_date() {
-        return start_date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public Item setStart_date(LocalDate start_date) {
-        this.start_date = start_date;
+    public Item setStartDate(LocalDate start_date) {
+        this.startDate = start_date;
 
         return this;
     }
 
-    public LocalDate getEnd_date() {
-        return end_date;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public Item setEnd_date(LocalDate end_date) {
-        this.end_date = end_date;
+    public Item setEndDate(LocalDate end_date) {
+        this.endDate = end_date;
 
         return this;
     }
