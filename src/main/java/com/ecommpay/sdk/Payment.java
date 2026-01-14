@@ -1,6 +1,12 @@
 package com.ecommpay.sdk;
 
+import com.ecommpay.sdk.model.booking.BookingInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
@@ -73,6 +79,8 @@ public class Payment
 
     private static final String INTERFACE_TYPE = "{\"id\": 21}";
 
+    private static final String PARAM_BOOKING_INFO = "booking_info";
+
     /**
      * Encoding charset
      */
@@ -82,6 +90,10 @@ public class Payment
      * Map with payment params
      */
     private HashMap<String, Object> params = new HashMap<String, Object>();
+
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     /**
      * com.ecommpay.sdk.Payment constructor
@@ -104,23 +116,24 @@ public class Payment
         this.setParam(PAYMENT_ID, paymentId);
     }
 
-    public void setBookingInfo(HashMap<String, Object> bookingInfo) throws ProcessException {
-        if (bookingInfo == null || bookingInfo.isEmpty()) {
-            throw new ProcessException("Booking info parameter must not be null or empty");
-        }
+    public void setBookingInfo(BookingInfo bookingInfo) throws ProcessException {
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            String json = MAPPER.writeValueAsString(bookingInfo);
 
-            String json = mapper.writeValueAsString(bookingInfo);
-            mapper.readTree(json);
+            JsonNode node = MAPPER.readTree(json);
+
+            if (!node.isObject() || node.isEmpty()) {
+                throw new ProcessException("booking_info must not be empty");
+            }
+
             String base64 = Base64.getEncoder()
                     .encodeToString(json.getBytes(StandardCharsets.UTF_8));
 
-            this.setParam("booking_info", base64);
+            setParam(PARAM_BOOKING_INFO, base64);
 
-        } catch (Exception e) {
-            throw new ProcessException("Invalid booking info JSON structure");
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Invalid booking_info JSON structure", e);
         }
     }
 

@@ -1,21 +1,18 @@
 import com.ecommpay.sdk.Payment;
 import com.ecommpay.sdk.ProcessException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.ecommpay.sdk.model.booking.Booker;
+import com.ecommpay.sdk.model.booking.BookingInfo;
+import com.ecommpay.sdk.model.booking.Item;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -80,54 +77,50 @@ public class PaymentTest
     }
 
     @Test
-    public void testSetAllFieldsBookingInfo() throws Exception {
+    public void testSetBookingInfoMapSuccess() throws Exception {
         Payment payment = new Payment("123");
 
-        InputStream is = getClass()
-                .getClassLoader()
-                .getResourceAsStream("booking_info.json");
-        assertNotNull(is);
+        Booker booker = new Booker()
+                .setFirst_name("William")
+                .setLast_name("Herschel")
+                .setEmail("rsfellow@mail.com");
+        List<Booker> bookers = new ArrayList<>();
+        bookers.add(booker);
 
-        JSONObject bookingInfo =
-                (JSONObject) new JSONParser().parse(
-                        new InputStreamReader(is, StandardCharsets.UTF_8)
-                );
+        Item item = new Item()
+                .setDescription("VIP Arrival")
+                .setStart_date(LocalDate.of(2026, 8, 12))
+                .setEnd_date(LocalDate.of(2026, 8, 14));
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+
+        BookingInfo bookingInfo = new BookingInfo()
+                .setStart_date(LocalDate.of(2026, 8, 12))
+                .setEnd_date(LocalDate.of(2026, 8, 14))
+                .setDescription("Sideris music festival full pass")
+                .setTotal(200000)
+                .setPax(1)
+                .setReference("musicfestlink")
+                .setId("83")
+                .setBookers(bookers)
+                .setItems(items);
 
         payment.setBookingInfo(bookingInfo);
 
         String encoded = payment.getParams().get("booking_info").toString();
         assertNotNull(encoded);
 
-        String decodedJson = new String(
-                Base64.getDecoder().decode(encoded),
-                StandardCharsets.UTF_8
-        );
-
-        JSONObject decoded =
-                (JSONObject) new JSONParser().parse(decodedJson);
-
-        assertEquals(bookingInfo, decoded);
-    }
-
-    @Test(expected = ProcessException.class)
-    public void testSetBookingInfoNull() throws ProcessException {
-        Payment payment = new Payment("123");
-        payment.setBookingInfo(null);
+        String expected = "eyJzdGFydF9kYXRlIjoiMTItMDgtMjAyNiIsImVuZF9kYXRlIjoiMTQtMDgtMjAyNiIsImRlc2NyaXB0aW9uIjoiU2" +
+                "lkZXJpcyBtdXNpYyBmZXN0aXZhbCBmdWxsIHBhc3MiLCJ0b3RhbCI6MjAwMDAwLCJwYXgiOjEsImJvb2tlcnMiOlt7ImZpcnN0X2" +
+                "5hbWUiOiJXaWxsaWFtIiwibGFzdF9uYW1lIjoiSGVyc2NoZWwiLCJlbWFpbCI6InJzZmVsbG93QG1haWwuY29tIn1dLCJpdGVtcy" +
+                "I6W3siZGVzY3JpcHRpb24iOiJWSVAgQXJyaXZhbCIsInN0YXJ0X2RhdGUiOiIxMi0wOC0yMDI2IiwiZW5kX2RhdGUiOiIxNC0wOC" +
+                "0yMDI2In1dLCJyZWZlcmVuY2UiOiJtdXNpY2Zlc3RsaW5rIiwiaWQiOiI4MyJ9";
+        assertEquals(expected, encoded);
     }
 
     @Test(expected = ProcessException.class)
     public void testSetBookingInfoEmpty() throws ProcessException {
         Payment payment = new Payment("123");
-        payment.setBookingInfo(new HashMap<>());
-    }
-
-    @Test(expected = ProcessException.class)
-    public void testSetBookingInfoInvalid() throws ProcessException {
-        Payment payment = new Payment("123");
-
-        HashMap<String, Object> invalid = new HashMap<>();
-        invalid.put("bad", new Object());
-
-        payment.setBookingInfo(invalid);
+        payment.setBookingInfo(new BookingInfo());
     }
 }
