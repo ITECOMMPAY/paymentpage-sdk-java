@@ -1,8 +1,17 @@
 package com.ecommpay.sdk;
 
+import com.ecommpay.sdk.model.booking.BookingInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.net.URLEncoder;
@@ -70,6 +79,8 @@ public class Payment
 
     private static final String INTERFACE_TYPE = "{\"id\": 21}";
 
+    private static final String PARAM_BOOKING_INFO = "booking_info";
+
     /**
      * Encoding charset
      */
@@ -79,6 +90,10 @@ public class Payment
      * Map with payment params
      */
     private HashMap<String, Object> params = new HashMap<String, Object>();
+
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     /**
      * com.ecommpay.sdk.Payment constructor
@@ -99,6 +114,27 @@ public class Payment
     public Payment(String projectId, String paymentId) {
         this(projectId);
         this.setParam(PAYMENT_ID, paymentId);
+    }
+
+    public void setBookingInfo(BookingInfo bookingInfo) throws ProcessException {
+
+        try {
+            String json = MAPPER.writeValueAsString(bookingInfo);
+
+            JsonNode node = MAPPER.readTree(json);
+
+            if (!node.isObject() || node.isEmpty()) {
+                throw new ProcessException("booking_info must not be empty");
+            }
+
+            String base64 = Base64.getEncoder()
+                    .encodeToString(json.getBytes(StandardCharsets.UTF_8));
+
+            setParam(PARAM_BOOKING_INFO, base64);
+
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Invalid booking_info JSON structure", e);
+        }
     }
 
     /**
