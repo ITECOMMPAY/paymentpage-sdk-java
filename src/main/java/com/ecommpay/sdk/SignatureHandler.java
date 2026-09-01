@@ -131,6 +131,8 @@ public class SignatureHandler
 
             if (valueObject instanceof Map) {
                 paramsToSign.putAll(getParamsToSing((Map) valueObject, key, ignore));
+            } else if (valueObject == null) {
+                paramsToSign.put(key, key + DELIMITER_KEY);
             } else {
                 paramsToSign.put(key, key + DELIMITER_KEY + valueObject.toString());
             }

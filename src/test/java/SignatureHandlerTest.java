@@ -18,6 +18,10 @@ public class SignatureHandlerTest
             "{`id`: `test.test-payment`, `status`: `success`, `valid`: true}, " +
             "`some-data`: 1234, `frame_mode`: `popup`}").replace('`', '"');
 
+    private String jsonWithNullField = ("{`payment`:" +
+            "{`id`: `test.test-payment`, `status`: `success`, `valid`: true}, " +
+            "`some-data`: 1234, `frame_mode`: `popup`, `missing_field`: null}").replace('`', '"');
+
     @Before
     public void initTest()
     {
@@ -51,6 +55,14 @@ public class SignatureHandlerTest
         ObjectMapper mapper = new ObjectMapper();
         Map paymentParams = mapper.readValue(json, new TypeReference<Map<String, Object>>() {});
         assertTrue(signatureHandler.check("Z0YwpWdNwBspA/6wicHVr4f6n0xMFuyZnAlIxnO86Zu/EIo3FZUEntClEVjulKpBrVF+HlyPEK1X41iCjbFgWg==", paymentParams));
+    }
+
+    @Test
+    public void checkWhenSomeFieldIsNull() throws IOException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        Map paymentParams = mapper.readValue(jsonWithNullField, new TypeReference<Map<String, Object>>() {});
+        assertTrue(signatureHandler.check("uEL+Mi33F3f61dlh/l/Mslj+r7vHLq/VckMUZKUc/KSAz5UHA0wcoBvNt8oefF2rizul9NB/oEfWz5mW++WhGg==", paymentParams));
     }
 
     @Test
